@@ -34,7 +34,7 @@ exploring the data, and getting acquainted with the 3 tables. */
 /* Q1: Some of the facilities charge a fee to members, but some do not.
 Write a SQL query to produce a list of the names of the facilities that do. */
 
-SELECT * FROM `Facilities` WHERE membercost = 0
+SELECT * FROM `Facilities` WHERE membercost > 0
 
 
 /* Q2: How many facilities do not charge a fee to members? */
@@ -48,47 +48,24 @@ facilities in question. */
 
 SELECT facid, name, membercost, monthlymaintenance  FROM `Facilities` WHERE membercost <> 0 AND membercost <= .2*monthlymaintenance
 
-facid	
-name	
-membercost	
-monthlymaintenance	
-0
-Tennis Court 1
-5.0
-200
-1
-Tennis Court 2
-5.0
-200
-4
-Massage Room 1
-9.9
-3000
-5
-Massage Room 2
-9.9
-3000
-6
-Squash Court
-3.5
-80
-
 
 /* Q4: Write an SQL query to retrieve the details of facilities with ID 1 and 5.
 Try writing the query without using the OR operator. */
 
+SELECT * FROM `Facilities` WHERE facid IN (1,5)
 
 /* Q5: Produce a list of facilities, with each labelled as
 'cheap' or 'expensive', depending on if their monthly maintenance cost is
 more than $100. Return the name and monthly maintenance of the facilities
 in question. */
 
-SELECT * FROM `Facilities` WHERE facid IN (1,5)
+SELECT name, monthlymaintenance, expense_label FROM `Facilities` 
 
 
 /* Q6: You'd like to get the first and last name of the last member(s)
 who signed up. Try not to use the LIMIT clause for your solution. */
 
+SELECT firstname, surname FROM Members WHERE joindate =(SELECT MAX(joindate) FROM Members)
 
 /* Q7: Produce a list of all members who have used a tennis court.
 Include in your output the name of the court, and the name of the member
